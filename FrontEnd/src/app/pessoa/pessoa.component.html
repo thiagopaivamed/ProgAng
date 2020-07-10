@@ -1,0 +1,51 @@
+<h4>Pessoas cadastradas</h4>
+
+<form [formGroup]="pessoaForm" (ngSubmit)="onFormSubmit()">
+    <table>
+        <tr>
+            <td>
+                <input formControlName="Nome" placeholder="Nome">
+                <span *ngIf="!pessoaForm.get('Nome').value && pessoaForm.get('Nome').touched"></span>
+            </td>
+            <td>
+                <input formControlName="Idade" placeholder="Idade">
+                <span *ngIf="!pessoaForm.get('Idade').value && pessoaForm.get('Idade').touched"></span>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <button type="submit" [disabled]="!pessoaForm.valid">Enviar</button>
+                <button type="reset" (click)="resetForm">Resetar</button>
+            </td>
+
+            <td>
+                <p *ngIf="dataSaved">
+                    {{message}}
+                </p>
+            </td>
+        </tr>
+    </table>
+
+    <br/><br/>
+
+    <table class="table" > 
+        <tr ngclass="btn-primary"> 
+          <th class="tbl2">Nome</th> 
+          <th class="tbl2">Idade</th> 
+          <th class="tbl2">Edita</th> 
+          <th class="tbl2">Deleta</th> 
+        </tr> 
+        <tr *ngFor="let pessoa of allPessoas | async"> 
+          <td class="tbl2">{{pessoa.nome}}</td> 
+          <td class="tbl2">{{pessoa.idade}}</td> 
+          <td class="tbl2"> 
+            <button type="button" class="btn btn-info" (click)="loadPessoaToEdit(pessoa.pessoaId)">Editar</button> 
+          </td> 
+          <td class="tbl2"> 
+            <button type="button" class="btn btn-danger" (click)="deletePessoa(pessoa.pessoaId)">Deletar</button> 
+          </td> 
+        </tr>    
+      </table> 
+
+</form>
